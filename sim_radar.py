@@ -28,7 +28,7 @@ def sim_oslink(devList, host_ip=('172.30.112.1', 10006), freq=1, loop=1):
                 os.system('kill %d' % os.getpid())
             for i in a:
                 now = datetime.datetime.now()
-                packet = struct.pack("!IIIfI", dirct, now.hour, now.minute, float(
+                packet = struct.pack("!IIIfI", i[0][2], now.hour, now.minute, float(
                     now.second + now.microsecond/1000000), 1)
                 packet = packet + \
                     struct.pack("!ddI", i[0][0], i[0][1], int(i[1]))

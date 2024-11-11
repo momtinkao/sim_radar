@@ -34,12 +34,14 @@ class Lane:
     num = 1
     trace = numpy.array([[0, 0, 0]])
     sleep = 0
+    dirct = 0
 
-    def __init__(self, trace_point, speed=30, freq=1, sleep=0):
+    def __init__(self, trace_point, speed=30, freq=1, sleep=0,dirct = 0):
         self.speed = speed
         speed = speed * 1000 / (3600.0 * freq)
 
         self.sleep = sleep
+        self.dirct = dirct
 
         for i in range(len(trace_point) - 1):
             dist = distance(trace_point[i], trace_point[i + 1])
@@ -84,7 +86,7 @@ class Lane:
         if run > self.trace.shape[0] - 1:
             return (0.0, 0.0, 0.0)
 
-        return (self.trace[run][0], self.trace[run][1], self.trace[run][2])
+        return (self.trace[run][0], self.trace[run][1], self.dirct)
 
 
 class Simulator:
@@ -136,8 +138,8 @@ if __name__ == '__main__':
 
     freq = 1
     lines1 = [Lane(((250, 0),
-                    (0, 0)), speed=50, freq=14), Lane(((180, 0),
-                                                       (0, 0)), speed=30, freq=14)
+                    (0, 0)), speed=50, freq=14,dirct = 0), Lane(((180, 0),
+                                                       (0, 0)), speed=30, freq=14,dirct=1)
               ]
 
     loop = -1  # negative = unlimited
@@ -150,5 +152,8 @@ if __name__ == '__main__':
         sim.append_lane(ip, i)
 
     for i in range(100):
-        print(sim.next_gps())
+        a = sim.next_gps()
+        for i in a:
+            print(i)
+        print("//////")
         time.sleep(0.1)
